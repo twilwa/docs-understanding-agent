@@ -1,0 +1,150 @@
+First, let's outline the core classes, functions, and methods that will be necessary:
+
+1. SitemapLoader: This class will be responsible for loading all pages from a provided sitemap link.
+2. DocumentChunker: This class will be responsible for chunking the documents and embedding them into vectors using the OpenAI library.
+3. PineconeDatabase: This class will be responsible for storing vectors in a Pinecone vector database with a vector dimension size of 1024.
+4. WebBaseLoader: This class will be responsible for loading documents from a provided GitHub repo.
+5. BM25Encoder: This class will be responsible for creating a PineconeHybridSearchRetriever.
+6. RetreivalQA: This class will be responsible for creating a langchain retrievalqachain for each retriever type.
+7. ConversationAgent: This class will be responsible for providing relevant information based on the user's query.
+8. CustomResponseSchema: This class will be responsible for defining the custom schema for the agent's responses.
+9. StreamlitApp: This class will be responsible for creating a Streamlit conversational app frontend for user interaction.
+
+Now, let's create the code for each of these classes and functions. We'll start with the "entrypoint" file, which will be the main.py file.
+
+main.py
+```python
+from sitemap_loader import SitemapLoader
+from document_chunker import DocumentChunker
+from pinecone_database import PineconeDatabase
+from web_base_loader import WebBaseLoader
+from bm25_encoder import BM25Encoder
+from retreival_qa import RetreivalQA
+from conversation_agent import ConversationAgent
+from custom_response_schema import CustomResponseSchema
+from streamlit_app import StreamlitApp
+
+def main():
+    # Load all pages from a provided sitemap link
+    sitemap_loader = SitemapLoader("sitemap_link")
+    pages = sitemap_loader.load_sitemap()
+
+    # Chunk the documents and embed them into vectors
+    document_chunker = DocumentChunker()
+    vectors = document_chunker.chunk_and_embed(pages)
+
+    # Store vectors in a Pinecone vector database
+    pinecone_database = PineconeDatabase()
+    pinecone_database.store_vectors(vectors)
+
+    # Load documents from a provided GitHub repo
+    web_base_loader = WebBaseLoader("repo_url")
+    documents = web_base_loader.load_documents()
+
+    # Create a PineconeHybridSearchRetriever
+    bm25_encoder = BM25Encoder()
+    retriever = bm25_encoder.create_retriever()
+
+    # Create a langchain retrievalqachain for each retriever type
+    retreival_qa = RetreivalQA()
+    qa_chain = retreival_qa.create_chain(retriever)
+
+    # Provide relevant information based on the user's query
+    conversation_agent = ConversationAgent()
+    response = conversation_agent.get_response("user_query")
+
+    # Define the custom schema for the agent's responses
+    custom_response_schema = CustomResponseSchema()
+    schema = custom_response_schema.define_schema()
+
+    # Create a Streamlit conversational app frontend for user interaction
+    streamlit_app = StreamlitApp()
+    streamlit_app.run()
+
+if __name__ == "__main__":
+    main()
+```
+
+Now, let's create the code for each of the classes that are imported by the main.py file. We'll start with the SitemapLoader class.
+
+sitemap_loader.py
+```python
+class SitemapLoader:
+    def __init__(self, sitemap_link):
+        self.sitemap_link = sitemap_link
+
+    def load_sitemap(self):
+        # Code to load all pages from the provided sitemap link
+        pass
+```
+
+document_chunker.py
+```python
+class DocumentChunker:
+    def chunk_and_embed(self, pages):
+        # Code to chunk the documents and embed them into vectors
+        pass
+```
+
+pinecone_database.py
+```python
+class PineconeDatabase:
+    def store_vectors(self, vectors):
+        # Code to store vectors in a Pinecone vector database
+        pass
+```
+
+web_base_loader.py
+```python
+class WebBaseLoader:
+    def __init__(self, repo_url):
+        self.repo_url = repo_url
+
+    def load_documents(self):
+        # Code to load documents from the provided GitHub repo
+        pass
+```
+
+bm25_encoder.py
+```python
+class BM25Encoder:
+    def create_retriever(self):
+        # Code to create a PineconeHybridSearchRetriever
+        pass
+```
+
+retreival_qa.py
+```python
+class RetreivalQA:
+    def create_chain(self, retriever):
+        # Code to create a langchain retrievalqachain for each retriever type
+        pass
+```
+
+conversation_agent.py
+```python
+class ConversationAgent:
+    def get_response(self, user_query):
+        # Code to provide relevant information based on the user's query
+        pass
+```
+
+custom_response_schema.py
+```python
+from pydantic import BaseModel, Field
+
+class CustomResponseSchema(BaseModel):
+    def define_schema(self):
+        # Code to define the custom schema for the agent's responses
+        pass
+```
+
+streamlit_app.py
+```python
+class StreamlitApp:
+    def run(self):
+        # Code to create a Streamlit conversational app frontend for user interaction
+        pass
+```
+
+Please note that the actual implementation of these classes and functions will depend on the specific requirements and constraints of your project. The code provided here is just a skeleton to give you an idea of how to structure your project.
